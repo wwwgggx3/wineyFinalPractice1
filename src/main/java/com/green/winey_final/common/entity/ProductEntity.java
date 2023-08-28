@@ -50,16 +50,16 @@ public class ProductEntity extends BaseEntity {
     @Column(length = 11)
     private int quantity;
 
-    @ManyToOne
-    @JoinColumn(name = "categoryId", updatable = false, nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "categoryId", updatable = false, nullable = false, insertable = true)
     private CategoryEntity categoryEntity;
 
-    @ManyToOne
-    @JoinColumn(name = "featureId", updatable = false, nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "featureId", updatable = false, nullable = false, insertable = true)
     private FeatureEntity featureEntity;
 
-    @ManyToOne
-    @JoinColumn(name = "countryId", updatable = false, nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "countryId", updatable = false, nullable = false, insertable = true)
     private CountryEntity countryEntity;
 
 }

@@ -60,10 +60,7 @@ public class AdminService {
         System.out.println("1111111111111");
         FeatureEntity featureResult = featureRep.save(featureEntity);
 
-        System.out.println(featureResult.getAcidity());
-        System.out.println(featureResult.getBody());
-        System.out.println(featureResult.getSweety());
-
+        System.out.println("피처리절트"+featureResult.toString());
 
         System.out.println("222222222222");
         //t_product
@@ -85,6 +82,10 @@ public class AdminService {
         // categoryId set하는 부분 //확인 필요
         CategoryEntity categoryResult = categoryRep.getReferenceById(param.getCategory());
         productEntity.setCategoryEntity(categoryResult);
+
+        System.out.println("컨츄리프로덕트"+productEntity.getCountryEntity().toString());
+//        productEntity.getCountryEntity().toString();
+
 
         //t_sale
         SaleEntity saleEntity = new SaleEntity();
@@ -202,7 +203,7 @@ public class AdminService {
     //등록 상품 리스트 출력 (전체 상품)
     public List<ProductVo> getProduct(int page) {
 
-
+//        List<ProductVo> list =
         //페이징
         List<ProductEntity> productList1 = productRep.findAll();
         return productList1.stream().map(entity -> ProductVo.builder()
