@@ -2,7 +2,7 @@ package com.green.winey_final.common.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import com.green.winey_final.common.config.jpa.BaseEntity;
+import com.green.winey_final.common.config.jpa.Base;
 import com.green.winey_final.common.config.security.model.ProviderType;
 import com.green.winey_final.common.config.security.model.RoleType;
 import jakarta.persistence.*;
@@ -23,7 +23,7 @@ import org.hibernate.annotations.DynamicInsert;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @DynamicInsert
-public class UserEntity extends BaseEntity {
+public class UserEntity extends Base {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -5,11 +5,10 @@ import com.green.winey_final.common.entity.*;
 import com.green.winey_final.repository.*;
 //import com.green.winey_final.common.utils.MyFileUtils;
 import com.green.winey_final.utils.MyFileUtils;
-import lombok.RequiredArgsConstructor;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,9 +33,10 @@ public class AdminService {
     private final WinePairingRepository winePairingRep;
     private final SmallCategoryRepository smallCategoryRep;
 //    private final PagingAndSortRepository pagingAndSortRep;
+    private final JPAQueryFactory queryFactory;
 
     @Autowired
-    public AdminService(AdminMapper MAPPER, @Value("${file.dir}") String FILE_DIR, ProductRepository productRep, FeatureRepository featureRep, SaleRepository saleRep, AromaRepository aromaRep, CountryRepository countryRep, CategoryRepository categoryRep, AromaCategoryRepository aromaCategoryRep, WinePairingRepository winePairingRep, SmallCategoryRepository smallCategoryRep) {
+    public AdminService(AdminMapper MAPPER, @Value("${file.dir}") String FILE_DIR, ProductRepository productRep, FeatureRepository featureRep, SaleRepository saleRep, AromaRepository aromaRep, CountryRepository countryRep, CategoryRepository categoryRep, AromaCategoryRepository aromaCategoryRep, WinePairingRepository winePairingRep, SmallCategoryRepository smallCategoryRep, JPAQueryFactory queryFactory) {
         this.MAPPER = MAPPER;
         this.FILE_DIR = MyFileUtils.getAbsolutePath(FILE_DIR);
         this.productRep = productRep;
@@ -48,6 +48,7 @@ public class AdminService {
         this.aromaCategoryRep = aromaCategoryRep;
         this.winePairingRep = winePairingRep;
         this.smallCategoryRep = smallCategoryRep;
+        this.queryFactory = queryFactory;
     }
 
     public Long postProduct(MultipartFile pic, ProductInsParam param) {
@@ -202,7 +203,7 @@ public class AdminService {
 
     //등록 상품 리스트 출력 (전체 상품)
     public List<ProductVo> getProduct(int page) {
-
+//        queryFactory.selectFrom()
 //        List<ProductVo> list =
         //페이징
         List<ProductEntity> productList1 = productRep.findAll();

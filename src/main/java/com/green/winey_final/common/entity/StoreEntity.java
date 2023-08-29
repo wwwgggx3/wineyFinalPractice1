@@ -1,7 +1,7 @@
 package com.green.winey_final.common.entity;
 
 
-import com.green.winey_final.common.config.jpa.BaseEntity;
+import com.green.winey_final.common.config.jpa.Base;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -17,7 +17,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class StoreEntity extends BaseEntity {
+public class StoreEntity extends Base {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

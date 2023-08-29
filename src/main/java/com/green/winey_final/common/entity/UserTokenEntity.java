@@ -1,7 +1,7 @@
 package com.green.winey_final.common.entity;
 
 
-import com.green.winey_final.common.config.jpa.BaseEntity;
+import com.green.winey_final.common.config.jpa.Base;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,7 +17,7 @@ import lombok.experimental.SuperBuilder;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @IdClass(UserId.class)
-public class UserTokenEntity extends BaseEntity {
+public class UserTokenEntity extends Base {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false, nullable = false, columnDefinition = "BIGINT UNSIGNED")

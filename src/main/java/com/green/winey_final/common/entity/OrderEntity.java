@@ -1,7 +1,7 @@
 package com.green.winey_final.common.entity;
 
 
-import com.green.winey_final.common.config.jpa.BaseEntity;
+import com.green.winey_final.common.config.jpa.Base;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @DynamicInsert
-public class OrderEntity extends BaseEntity {
+public class OrderEntity extends Base {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

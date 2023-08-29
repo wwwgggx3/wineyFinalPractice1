@@ -1,7 +1,7 @@
 package com.green.winey_final.common.entity;
 
 
-import com.green.winey_final.common.config.jpa.BaseEntity;
+import com.green.winey_final.common.config.jpa.Base;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,7 +18,7 @@ import org.hibernate.annotations.DynamicInsert;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @DynamicInsert
-public class OrderDetailEntity extends BaseEntity {
+public class OrderDetailEntity extends Base {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
