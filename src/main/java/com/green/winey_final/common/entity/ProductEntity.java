@@ -10,6 +10,7 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.DynamicInsert;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -62,4 +63,6 @@ public class ProductEntity extends Base {
     @JoinColumn(name = "countryId", updatable = false, nullable = false, insertable = true)
     private CountryEntity countryEntity;
 
+    @OneToMany(mappedBy = "productEntity")
+    List<SaleEntity> saleEntities = new ArrayList<>();
 }

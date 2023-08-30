@@ -2,9 +2,11 @@ package com.green.winey_final.admin;
 
 import com.green.winey_final.admin.model.*;
 import com.green.winey_final.common.entity.*;
+import com.green.winey_final.common.entity.QProductDto;
 import com.green.winey_final.repository.*;
-//import com.green.winey_final.common.utils.MyFileUtils;
 import com.green.winey_final.utils.MyFileUtils;
+import com.querydsl.core.Tuple;
+import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.util.List;
+
+import static com.green.winey_final.common.entity.QProductEntity.productEntity;
+import static com.green.winey_final.common.entity.QSaleEntity.saleEntity;
 
 @Slf4j
 @Service
@@ -202,23 +207,34 @@ public class AdminService {
     }
 
     //등록 상품 리스트 출력 (전체 상품)
-    public List<ProductVo> getProduct(int page) {
-//        queryFactory.selectFrom()
-//        List<ProductVo> list =
-        //페이징
-        List<ProductEntity> productList1 = productRep.findAll();
-        return productList1.stream().map(entity -> ProductVo.builder()
-                .productId(entity.getProductId())
-                .nmKor(entity.getNmKor())
-                .price(entity.getPrice())
-                .promotion(entity.getPromotion())
-                .beginner(entity.getBeginner())
-                .quantity(entity.getQuantity())
-//                .sale()
-//                .salePrice()
-                .build()
-        ).toList();
+    public List<Tuple> getProduct(int page) {
 
+        List<Tuple> list = queryFactory
+                .select(productEntity.productId, productEntity.nmKor, productEntity.price, productEntity.promotion, productEntity.beginner, productEntity.quantity ) //saleEntity.sale, saleEntity.salePrice
+                .from(productEntity)
+//                .join(saleEntity.productEntity, productEntity)
+//                .leftJoin(saleEntity.productEntity, )
+//                .on()
+                .fetch();
+
+//        QProductDto
+//        List<ProductDto> list2 = queryFactory.select(QProductDto.)
+
+        //페이징
+//        List<ProductEntity> productList1 = productRep.findAll();
+//        return productList1.stream().map(entity -> ProductVo.builder()
+//                .productId(entity.getProductId())
+//                .nmKor(entity.getNmKor())
+//                .price(entity.getPrice())
+//                .promotion(entity.getPromotion())
+//                .beginner(entity.getBeginner())
+//                .quantity(entity.getQuantity())
+////                .sale()
+////                .salePrice()
+//                .build()
+//        ).toList();
+//        return list;
+        return null;
     }
 
 
