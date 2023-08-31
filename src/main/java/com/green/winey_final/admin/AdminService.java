@@ -3,14 +3,18 @@ package com.green.winey_final.admin;
 import com.green.winey_final.admin.model.*;
 import com.green.winey_final.common.entity.*;
 import com.green.winey_final.common.entity.QProductDto;
+import com.green.winey_final.common.entity.QSaleDto;
 import com.green.winey_final.repository.*;
 import com.green.winey_final.utils.MyFileUtils;
-import com.querydsl.core.Tuple;
-import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -207,34 +211,41 @@ public class AdminService {
     }
 
     //등록 상품 리스트 출력 (전체 상품)
-    public List<Tuple> getProduct(int page) {
+    public Page<ProductDto> getProduct(int page, int row) {
 
-        List<Tuple> list = queryFactory
-                .select(productEntity.productId, productEntity.nmKor, productEntity.price, productEntity.promotion, productEntity.beginner, productEntity.quantity ) //saleEntity.sale, saleEntity.salePrice
+        /* ok. join없는 select 쿼리문
+        return queryFactory.select(new QProductDto(productEntity.productId, productEntity.nmKor, productEntity.price, productEntity.promotion, productEntity.beginner, productEntity.quantity))
                 .from(productEntity)
-//                .join(saleEntity.productEntity, productEntity)
-//                .leftJoin(saleEntity.productEntity, )
-//                .on()
                 .fetch();
 
-//        QProductDto
-//        List<ProductDto> list2 = queryFactory.select(QProductDto.)
+         */
+        Pageable pageable = PageRequest.of(page,row);
 
-        //페이징
-//        List<ProductEntity> productList1 = productRep.findAll();
-//        return productList1.stream().map(entity -> ProductVo.builder()
-//                .productId(entity.getProductId())
-//                .nmKor(entity.getNmKor())
-//                .price(entity.getPrice())
-//                .promotion(entity.getPromotion())
-//                .beginner(entity.getBeginner())
-//                .quantity(entity.getQuantity())
-////                .sale()
-////                .salePrice()
-//                .build()
-//        ).toList();
-//        return list;
-        return null;
+        List<ProductDto> list = queryFactory.select(new QProductDto(productEntity.productId, productEntity.nmKor, productEntity.price, productEntity.promotion, productEntity.beginner, productEntity.quantity, saleEntity.sale, saleEntity.salePrice))
+                .from(productEntity)
+//                .join(saleEntity)
+                .leftJoin(saleEntity)
+                .on(saleEntity.productEntity.eq(productEntity))
+                .offset(pageable.getPageSize())
+                .limit(pageable.getOffset())
+                .fetch();
+
+        //count로직1
+        Long count = queryFactory
+                .select(productEntity.count())
+                .from(productEntity)
+                .leftJoin(saleEntity)
+                .on(saleEntity.productEntity.eq(productEntity))
+                .fetchOne();
+        //count로직1
+        JPAQuery<Long> countQuery = queryFactory
+                .select(productEntity.count())
+                .from(productEntity)
+                .leftJoin(saleEntity)
+                .on(saleEntity.productEntity.eq(productEntity));
+
+        return PageableExecutionUtils.getPage(list, pageable, countQuery::fetchOne);
+
     }
 
 

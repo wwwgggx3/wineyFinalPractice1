@@ -1,10 +1,14 @@
 package com.green.winey_final.admin;
 
 import com.green.winey_final.admin.model.*;
+import com.green.winey_final.common.entity.ProductDto;
 import com.green.winey_final.common.entity.ProductEntity;
+import com.green.winey_final.common.entity.QProductDto;
+import com.green.winey_final.common.entity.SaleDto;
 import com.querydsl.core.Tuple;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -37,11 +41,12 @@ public class AdminController {
     }
 
 
-    @GetMapping("/product/list")
-    public List<Tuple> getProduct(@RequestParam(defaultValue = "1") int page) {
+    @GetMapping("/product/list") // @RequestParam(defaultValue = "1") int page
+    public Page<ProductDto> getProduct(@RequestParam(defaultValue = "1")int page,
+                                       @RequestParam(defaultValue = "20")int row) {
 //        @PageableDefault(sort = "product_id", direction = Sort.Direction.DESC, size = 10)
 //        Pageable pageable
-        return SERVICE.getProduct(page);
+        return SERVICE.getProduct(page, row);
     }
 
 }

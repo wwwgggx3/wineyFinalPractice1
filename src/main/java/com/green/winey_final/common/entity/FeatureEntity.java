@@ -24,11 +24,11 @@ public class FeatureEntity {
     private Long featureId;
 
     @Column(length = 3)
-    private Long sweety;
+    private int sweety;
 
     @Column(length = 3)
-    private Long acidity;
+    private int acidity;
 
     @Column(length = 3)
-    private Long body;
+    private int body;
 }
