@@ -24,7 +24,7 @@ public class SaleEntity {
     private Long saleId;
 
     @ManyToOne
-    @JoinColumn(name = "productId", updatable = false, nullable = false)
+    @JoinColumn(name = "productId", updatable = true, nullable = false)
     private ProductEntity productEntity;
 
     @Column(length = 11)

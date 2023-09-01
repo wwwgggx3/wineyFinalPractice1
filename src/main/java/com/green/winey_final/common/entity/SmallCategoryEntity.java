@@ -20,7 +20,7 @@ public class SmallCategoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false, nullable = false, columnDefinition = "BIGINT UNSIGNED")
-    private Long smallCategoryId;
+    private int smallCategoryId;
 
     @Column(nullable = false, length = 30)
     @Size(min = 2, max = 20)
