@@ -3,7 +3,6 @@ package com.green.winey_final.admin;
 import com.green.winey_final.admin.model.*;
 import com.green.winey_final.common.entity.*;
 import com.green.winey_final.common.entity.QProductDto;
-import com.green.winey_final.common.entity.QSaleDto;
 import com.green.winey_final.repository.*;
 import com.green.winey_final.utils.MyFileUtils;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -14,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,6 +22,7 @@ import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Objects;
 
 import static com.green.winey_final.common.entity.QProductEntity.productEntity;
 import static com.green.winey_final.common.entity.QSaleEntity.saleEntity;
@@ -312,14 +313,19 @@ public class AdminService {
                 .fetch();
 
          */
-        Pageable pageable = PageRequest.of(page,row);
+//        Pageable pageable = PageRequest.of(page,row);
+        Pageable pageable = PageRequest.of(page, row);
+
 
         List<ProductDto> list = queryFactory.select(new QProductDto(productEntity.productId, productEntity.nmKor, productEntity.price, productEntity.promotion, productEntity.beginner, productEntity.quantity, saleEntity.sale, saleEntity.salePrice))
                 .from(productEntity)
                 .leftJoin(saleEntity)
                 .on(saleEntity.productEntity.eq(productEntity))
-                .offset(pageable.getPageSize())
-                .limit(pageable.getOffset())
+//                .offset(pageable.getPageSize())
+                .orderBy()
+                .offset(pageable.getOffset())
+//                .limit(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch();
 
         //count로직1
@@ -344,6 +350,17 @@ public class AdminService {
 //    public List<ProductDto> findAllOrderBy(OrderConditon orderConditon) {
 //
 //        return null;
+//    }
+
+//    public List<ProductEntity> findAllPersonOrderBy(OrderConditionRequest orderConditionRequest) {
+//        if (Objects.nonNull(orderConditionRequest) && orderConditionRequest.equals(OrderConditionRequest.AGE)) {
+////            return productRep.findAllByOrderByAgeDesc();
+//            return productRep.findAllByOrderByProductIdDesc();
+//        } else if (Objects.nonNull(orderConditionRequest) && orderConditionRequest.equals(OrderConditionRequest.REGION)) {
+//            return productRep.findAllByOrderByQuantityAsc();
+//        } else {
+//            return productRep.findAll(Sort.by(Sort.Direction.DESC, "name"));
+//        }
 //    }
 
 

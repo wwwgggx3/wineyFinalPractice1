@@ -49,4 +49,11 @@ public class AdminController {
         return SERVICE.getProduct(page, row);
     }
 
+//    @GetMapping
+//    public List<ProductEntity> getProduct1(OrderConditionRequest orderConditionRequest){
+//
+//        return SERVICE.findAllPersonOrderBy(orderConditionRequest);
+//
+//    }
+
 }
